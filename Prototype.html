@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink - Blood Donation Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e53935;
+            --primary-dark: #c62828;
+            --secondary: #2196F3;
+            --light: #f5f5f5;
+            --dark: #333;
+            --grey: #757575;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #ffeb3b;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffeb3b;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F7011581-world-blood-donor-day-poster-donor-blood-concept-illustration-background-for-world-blood-donor-day&psig=AOvVaw3Hf7oVrZZaVtPZwtAU7Wtm&ust=1757102047788000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCNCQjLXxv48DFQAAAAAdAAAAABAL");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: #0b7dda;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+            background: white;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--grey);
+        }
+
+        .input-icon input {
+            padding-left: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(229, 57, 53, 0.3);
+        }
+
+        .eligibility-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .eligibility-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            background: #f9f9f9;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .eligibility-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Blood animation in background */
+        .blood-cells {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blood-cell {
+            position: absolute;
+            background: rgba(229, 57, 53, 0.15);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced login form */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+        }
+
+        .login-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--grey);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Enhanced hospital page */
+        .hospital-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hospital-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .hospital-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .hospital-feature i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Enhanced eligibility section */
+        .eligibility-criteria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .criteria-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .criteria-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .criteria-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .criteria-card h3 i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Blood animation background -->
+    <div class="blood-cells" id="blood-cells"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-tint"></i> LifeLink
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('login')">Login</a></li>
+                <li><a href="#" onclick="showPage('donor')">Donor Registration</a></li>
+                <li><a href="#" onclick="showPage('hospital')">Hospital Request</a></li>
+                <li><a href="#" onclick="showPage('eligibility')">Eligibility</a></li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Be someone's lifeline donate blood</h1>
+                <p>Join our network of blood donors and help those in need</p>
+                <button class="cta-button" onclick="showPage('donor')">Become a Donor</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Register</h3>
+                    <p>Sign up as a donor with your details and blood type</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Get Alerts</h3>
+                    <p>Receive notifications when your blood type is needed</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Donate</h3>
+                    <p>Visit the nearest blood donation center</p>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">5,244</div>
+                    <div class="stat-label">Lives Saved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1,852</div>
+                    <div class="stat-label">Active Donors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Hospitals Served</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <div class="container">
+            <h2 class="section-title">Login to Your Account</h2>
+            
+            <div class="login-container">
+                <div class="login-form">
+                    <h2><i class="fas fa-user-circle"></i> Member Login</h2>
+                    
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">Login</button>
+                    
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" onclick="showPage('donor')">Register as Donor</a></p>
+                        <p>Hospital representative? <a href="#" onclick="showPage('hospital')">Request Blood</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donor Registration Page -->
+    <div id="donor" class="page">
+        <div class="container">
+            <h2 class="section-title">Donor Registration</h2>
+            
+            <div class="form-container">
+                <form id="donor-form">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="fullname" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Enter your email address" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="blood-type">Blood Type</label>
+                        <div class="input-icon">
+                            <i class="fas fa-tint"></i>
+                            <select id="blood-type" required>
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <div class="input-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="location" placeholder="Enter your city" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last-donation">Last Donation Date</label>
+                        <input type="date" id="last-donation">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="health-info">Health Information</label>
+                        <textarea id="health-info" rows="3" placeholder="Any relevant health information"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Register as Donor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hospital Request Page -->
+    <div id="hospital" class="page">
+        <div class="container">
+            <h2 class="section-title">Hospital Blood Request</h2>
+            
+            <div class="hospital-features">
+                <div class="hospital-feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Quick Response</h3>
+                    <p>Get matched with donors in minutes</p>
+                </div>
+                <div class="hospital-feature">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Location Based</h3>
+                    <p>Find donors near your hospital</p>
+                </div>
+                <div class="hospital-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Verified Donors</h3>
+                    <p>All donors are pre-screened</p>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <form id="hospital-form">
+                    <div class="form-group">
+                        <label for="hospital-name">Hospital Name</label>
+                        <div class="input-icon">
+                            <i class="fas fa-hospital"></i>
+                            <input type="text" id="hospital-name" placeholder="Enter hospital name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-person">Contact Person</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user-md"></i>
+                            <input type="text" id="contact-person" placeholder="Enter contact person name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="h-email">Email Address</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="h-email" placeholder="Enter hospital email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="h-phone">Phone Number</label>
+                        <div class="input-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="h-phone" placeholder="Enter hospital phone number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="h-blood-type">Blood Type Needed</label>
+                        <div class="input-icon">
+                            <i class="fas fa-tint"></i>
+                            <select id="h-blood-type" required>
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="units">Units Required</label>
+                        <div class="input-icon">
+                            <i class="fas fa-flask"></i>
+                            <input type="number" id="units" min="1" placeholder="Number of units needed" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">Urgency Level</label>
+                        <select id="urgency" required>
+                            <option value="normal">Normal</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="need-by">Needed By</label>
+                        <input type="datetime-local" id="need-by" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eligibility Page -->
+    <div id="eligibility" class="page">
+        <div class="container">
+            <h2 class="section-title">Donor Eligibility Criteria</h2>
+            
+            <div class="eligibility-criteria">
+                <div class="criteria-card">
+                    <h3><i class="fas fa-birthday-cake"></i> Age Requirement</h3>
+                    <p>Donors must be between 18 and 65 years old. Donors above 65 may be accepted at the doctor's discretion.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-weight"></i> Weight Requirement</h3>
+                    <p>Donors must weigh at least 50 kg (110 lbs). This ensures your safety during the donation process.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-heartbeat"></i> Health Condition</h3>
+                    <p>Donors must be in good general health and feeling well on the day of donation. No fever or infections.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Donation Frequency</h3>
+                    <p>Whole blood can be donated every 56 days. Platelet donations can be made every 7 days, up to 24 times per year.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-pills"></i> Medication</h3>
+                    <p>Most medications are acceptable. Blood thinners may require a waiting period. Discuss any medications with our staff.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-plane"></i> Travel History</h3>
+                    <p>Recent travel to certain countries may temporarily prevent you from donating. This is to prevent disease transmission.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-procedures"></i> Medical Procedures</h3>
+                    <p>If you've had surgery, you may need to wait before donating. Typically a 6-month wait after major surgery is required.</p>
+                </div>
+                
+                <div class="criteria-card">
+                    <h3><i class="fas fa-syringe"></i> Tattoos & Piercings</h3>
+                    <p>You must wait 3-12 months after getting a tattoo or piercing, depending on local regulations and sterilization practices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Page -->
+    <div id="about" class="page">
+        <div class="container">
+            <h2 class="section-title">About LifeLink</h2>
+            
+            <div class="form-container">
+                <p>LifeLink is a platform dedicated to connecting blood donors with those in need. Our mission is to make the process of finding blood donors efficient, quick, and reliable.</p>
+                
+                <p>We work with hospitals, blood banks, and individual donors to create a network that ensures blood is available when and where it's needed most.</p>
+                
+                <h3>Our Vision</h3>
+                <p>To create a world where no one dies waiting for a blood transfusion.</p>
+                
+                <h3>Contact Us</h3>
+                <p>Email: info@lifelink.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <p>Address: 123 Health Avenue, Medical District, City</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 LifeLink - Blood Donation Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Show specific page and hide others
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Create blood cell animation
+        function createBloodCells() {
+            const container = document.getElementById('blood-cells');
+            for (let i = 0; i < 20; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('blood-cell');
+                
+                // Random size
+                const size = Math.random() * 20 + 10;
+                cell.style.width = `${size}px`;
+                cell.style.height = `${size}px`;
+                
+                // Random position
+                cell.style.left = `${Math.random() * 100}vw`;
+                
+                // Random animation delay
+                cell.style.animationDelay = `${Math.random() * 15}s`;
+                
+                container.appendChild(cell);
+            }
+        }
+
+        // Form submissions
+        document.getElementById('donor-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for registering as a donor! We will notify you when your blood type is needed.');
+            this.reset();
+            showPage('home');
+        });
+
+        document.getElementById('hospital-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your blood request has been submitted. We will notify matching donors.');
+            this.reset();
+            showPage('home');
+        });
+
+        // Initialize blood cell animation
+        createBloodCells();
+    </script>
+</body>
+</html>
