@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Raktsetu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --blue: #000080;
+            --light-blue: #E6F0FF;
+            --dark-red: #8B0000;
+            --light-red: #FFE6E6;
+            --gray: #666666;
+            --light-gray: #F5F5F5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(rgba(139, 0, 0, 0.7), rgba(139, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%238B0000"/></svg>');
+            background-size: cover;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--saffron);
+            margin-left: 5px;
+        }
+        
+        .login-card h2 {
+            font-family: 'Hind', sans-serif;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--blue);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--saffron);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.2);
+        }
+        
+        .password-toggle {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .btn {
+            padding: 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--saffron);
+            color: white;
+            border: 2px solid var(--saffron);
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--saffron);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--blue);
+            color: var(--blue);
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: var(--blue);
+            color: white;
+        }
+        
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: var(--dark-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: var(--gray);
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            color: var(--blue);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .signup-link {
+            margin-top: 20px;
+            color: var(--gray);
+        }
+        
+        .signup-link a {
+            color: var(--dark-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .notification.success i {
+            color: var(--green);
+        }
+        
+        .notification.error i {
+            color: var(--dark-red);
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .login-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification System -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text"></span>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">रक्तसेतु <span>Raktsetu</span></div>
+            <h2>Login to Your Account</h2>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <span class="toggle-password" id="togglePassword">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="login-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            
+            <div class="divider">
+                <span>Or continue with</span>
+            </div>
+            
+            <div class="social-login">
+                <a href="#" class="social-btn">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#" id="signup-link">Sign up now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                
+                // Toggle eye icon
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+            
+            // Form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const remember = document.getElementById('remember').checked;
+                
+                // Simple validation
+                if (!email || !password) {
+                    showNotification('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showNotification('Please enter a valid email address', 'error');
+                    return;
+                }
+                
+                // Simulate login process
+                simulateLogin(email, password, remember);
+            });
+            
+            // Sign up link
+            document.getElementById('signup-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                // In a real application, this would redirect to the signup page
+                showNotification('Redirecting to sign up page...', 'success');
+                
+                // After a brief delay, redirect to the main page (simulating signup)
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Your main page
+                }, 1500);
+            });
+            
+            // Forgot password
+            document.querySelector('.forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification('Password reset functionality would be implemented here', 'success');
+            });
+            
+            // Social login buttons
+            document.querySelectorAll('.social-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.querySelector('i').parentNode.className.includes('google') ? 'Google' : 
+                                  this.querySelector('i').parentNode.className.includes('facebook') ? 'Facebook' : 'Twitter';
+                    showNotification(`${platform} login would be implemented here`, 'success');
+                });
+            });
+            
+            // Show notification
+            function showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                const notificationText = document.getElementById('notification-text');
+                
+                notificationText.textContent = message;
+                notification.className = `notification ${type} show`;
+                
+                // Change icon based on type
+                const icon = notification.querySelector('i');
+                icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Simulate login process
+            function simulateLogin(email, password, remember) {
+                // Show loading state
+                const loginBtn = document.querySelector('#login-form button[type="submit"]');
+                const originalText = loginBtn.textContent;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                loginBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // For demo purposes, accept any non-empty password
+                    if (password.length > 0) {
+                        showNotification('Login successful! Redirecting...', 'success');
+                        
+                        // Store user session (in a real app, this would be a proper auth token)
+                        if (remember) {
+                            localStorage.setItem('userEmail', email);
+                            localStorage.setItem('rememberMe', 'true');
+                        } else {
+                            sessionStorage.setItem('userEmail', email);
+                        }
+                        
+                        // Redirect to dashboard after successful login
+                        setTimeout(() => {
+                            window.location.href = 'index.html'; // Your main page
+                        }, 1500);
+                    } else {
+                        showNotification('Invalid email or password', 'error');
+                        loginBtn.textContent = originalText;
+                        loginBtn.disabled = false;
+                    }
+                }, 1500);
+            }
+            
+            // Check if remember me was previously set
+            if (localStorage.getItem('rememberMe') === 'true' && localStorage.getItem('userEmail')) {
+                document.getElementById('email').value = localStorage.getItem('userEmail');
+                document.getElementById('remember').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>
