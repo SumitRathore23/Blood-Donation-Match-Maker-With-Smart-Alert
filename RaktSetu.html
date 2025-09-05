@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raktsetu - Blood Donation Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --blue: #000080;
+            --light-blue: #E6F0FF;
+            --dark-red: #8B0000;
+            --light-red: #FFE6E6;
+            --gray: #666666;
+            --light-gray: #F5F5F5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Hind', sans-serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--dark-red) 0%, #8B0000 100%);
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--saffron);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--saffron);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--saffron);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            margin-right: 15px;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--dark-red);
+        }
+        
+        .btn-primary {
+            background: var(--saffron);
+            color: white;
+            border: 2px solid var(--saffron);
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--saffron);
+        }
+        
+        .btn-success {
+            background: var(--green);
+            color: white;
+            border: 2px solid var(--green);
+        }
+        
+        .btn-success:hover {
+            background: transparent;
+            color: var(--green);
+        }
+        
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 120px 0 60px;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%238B0000"/></svg>');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        /* 3D Blood Drop */
+        #blood-drop-3d {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* How it Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--blue);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .step-card {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--dark-red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .step-card:hover:before {
+            transform: scaleX(1);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(139, 0, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--dark-red);
+            font-size: 2rem;
+        }
+        
+        .step-card h3 {
+            margin-bottom: 15px;
+            color: var(--blue);
+        }
+        
+        /* Statistics Section */
+        .statistics {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #d4e5ff 100%);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--dark-red);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        
+        .stat-card p {
+            color: var(--gray);
+        }
+        
+        /* Donation Match */
+        .donation-match {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .match-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .match-visual {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blood-type {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--dark-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        .match-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .match-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--blue);
+        }
+        
+        .compatibility {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .compat-bar {
+            flex-grow: 1;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .compat-fill {
+            height: 100%;
+            background: var(--green);
+            width: 0;
+            transition: width 1.5s ease;
+        }
+        
+        /* Donor Registration */
+        .donor-registration {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+        
+        .registration-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--saffron);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.2);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Dashboard */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--dark-red);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        
+        .stat-card p {
+            color: var(--gray);
+        }
+        
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .action-card i {
+            font-size: 3rem;
+            color: var(--saffron);
+            margin-bottom: 20px;
+        }
+        
+        .action-card h3 {
+            margin-bottom: 15px;
+            color: var(--blue);
+        }
+        
+        .action-card p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+        
+        /* Donors List */
+        .donors-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .donor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .donor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .donor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .donor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--dark-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        .donor-info h3 {
+            margin-bottom: 5px;
+            color: var(--blue);
+        }
+        
+        .donor-info p {
+            color: var(--gray);
+        }
+        
+        .donor-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .donor-detail {
+            background: var(--light-gray);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .donor-detail i {
+            color: var(--dark-red);
+            margin-right: 5px;
+        }
+        
+        /* Requests List */
+        .requests-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .request-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .request-card.urgent {
+            border-left: 5px solid var(--dark-red);
+        }
+        
+        .request-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .request-title {
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .request-urgency {
+            background: var(--dark-red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .request-details {
+            margin-bottom: 20px;
+        }
+        
+        .request-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .request-detail i {
+            color: var(--dark-red);
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        /* Blood Banks */
+        .blood-banks {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+        
+        .banks-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .bank-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .bank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .bank-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .bank-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-red);
+            color: var(--dark-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .bank-info h3 {
+            margin-bottom: 5px;
+            color: var(--blue);
+        }
+        
+        .bank-info p {
+            color: var(--gray);
+        }
+        
+        .bank-details {
+            margin-bottom: 20px;
+        }
+        
+        .bank-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .bank-detail i {
+            color: var(--dark-red);
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--blue);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--saffron);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--saffron);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .social-links a:hover {
+            background: var(--saffron);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .notification.success i {
+            color: var(--green);
+        }
+        
+        .notification.error i {
+            color: var(--dark-red);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(139, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(139, 0, 0, 0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .match-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">रक्तसेतु <span>RaktSetu</span></div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="donors">Find Donors</a></li>
+                    <li><a href="#" class="nav-link" data-page="requests">Requests</a></li>
+                    <li><a href="#" class="nav-link" data-page="banks">Blood Banks</a></li>
+                    <li><a href="#" class="nav-link" data-page="donate">Donate</a></li>
+                </ul>
+                <div class="auth-buttons">
+                   
+                 <!-- Login Button -->
+<a href="login.html" class="btn btn-outline" id="login-btn">Log In</a>
+
+
+<!-- Signup Button -->
+<a href="signup.html" class="btn btn-primary" id="signup-btn">Sign Up</a>
+
+        </div>
+    </header>
+
+    <!-- Notification System -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text"></span>
+    </div>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div id="particles-js"></div>
+            <div class="container hero-content">
+                <h1>India's Blood Donation Network</h1>
+                <p>Connecting blood donors with those in need across India. Every drop counts in saving lives.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" data-page="donors">Find a Donor</a>
+                    <a href="#" class="btn btn-outline" data-page="donate">Become a Donor</a>
+                </div>
+                <div id="blood-drop-3d"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Statistics Section -->
+            <div class="statistics">
+                <div class="section-title">
+                    <h2>Blood Donation in India</h2>
+                    <p>Key statistics about blood donation in our country</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-tint"></i>
+                        <h3>12,000</h3>
+                        <p>Blood Donations Needed Daily</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hospital"></i>
+                        <h3>3,500</h3>
+                        <p>Blood Banks in India</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>1.5%</h3>
+                        <p>Of Indians Donate Blood</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>90%</h3>
+                        <p>Of Donations From Voluntary Donors</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="how-it-works">
+                <div class="section-title">
+                    <h2>How It Works</h2>
+                    <p>Our process is simple, secure, and designed to save lives as efficiently as possible</p>
+                </div>
+                <div class="steps">
+                    <div class="step-card">
+                        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+                        <h3>Register</h3>
+                        <p>Create your profile with blood type, location, and availability</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class="fas fa-heart"></i></div>
+                        <h3>Get Matched</h3>
+                        <p>Our algorithm finds compatible donors or recipients in your area</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class="fas fa-tint"></i></div>
+                        <h3>Donate</h3>
+                        <p>Schedule an appointment at a nearby blood bank or donation center</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="donation-match">
+                <div class="section-title">
+                    <h2>Smart Blood Matching</h2>
+                    <p>Our advanced algorithm ensures perfect compatibility between donors and recipients</p>
+                </div>
+                <div class="match-container">
+                    <div class="match-visual">
+                        <div class="blood-type">O+</div>
+                    </div>
+                    <div class="match-info">
+                        <h2>Blood Type Compatibility</h2>
+                        <p>Different blood types have specific compatibility requirements. Our system automatically matches donors with recipients based on these medical requirements.</p>
+                        
+                        <div class="compatibility">
+                            <div class="compat-bar">
+                                <div class="compat-fill" style="width: 85%;"></div>
+                            </div>
+                            <div class="compat-percent">85% Match</div>
+                        </div>
+                        
+                        <p>With our extensive network of donors, we achieve higher match rates than traditional methods, significantly reducing waiting times for patients in need.</p>
+                        <a href="#" class="btn btn-primary" data-page="donate">Check Compatibility</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="donor-registration">
+                <div class="section-title">
+                    <h2>Become a Raktsetu Donor Today</h2>
+                    <p>Join our community of donors and make a difference in someone's life</p>
+                </div>
+                <div class="registration-form">
+                    <form id="donor-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bloodType">Blood Type</label>
+                                <select id="bloodType" class="form-control" required>
+                                    <option value="">Select Blood Type</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location</label>
+                                <select id="location" class="form-control" required>
+                                    <option value="">Select City</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Mumbai">Mumbai</option>
+                                    <option value="Bangalore">Bangalore</option>
+                                    <option value="Chennai">Chennai</option>
+                                    <option value="Kolkata">Kolkata</option>
+                                    <option value="Hyderabad">Hyderabad</option>
+                                    <option value="Pune">Pune</option>
+                                    <option value="Ahmedabad">Ahmedabad</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="e.g., 9876543210" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Register as Donor</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Page -->
+    <section id="dashboard" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Dashboard</h2>
+                <p>Welcome back, let's save some lives together!</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-tint"></i>
+                    <h3>24</h3>
+                    <p>Lives Saved</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>8</h3>
+                    <p>Donations Made</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>156</h3>
+                    <p>Potential Matches</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar"></i>
+                    <h3>3</h3>
+                    <p>Upcoming Appointments</p>
+                </div>
+            </div>
+
+            <div class="dashboard-actions">
+                <div class="action-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Find Donors</h3>
+                    <p>Search for blood donors in your area based on blood type and location</p>
+                    <a href="#" class="btn btn-primary" data-page="donors">Search Now</a>
+                </div>
+                <div class="action-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Request Blood</h3>
+                    <p>Create a blood request for yourself or someone in need</p>
+                    <a href="#" class="btn btn-primary" data-page="requests">Make Request</a>
+                </div>
+                <div class="action-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Schedule Donation</h3>
+                    <p>Book an appointment at a nearby blood donation center</p>
+                    <a href="#" class="btn btn-primary">Schedule Now</a>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>Recent Activity</h2>
+            </div>
+
+            <div class="activity-list">
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-title">Blood Donation</div>
+                        <div class="request-date">2 days ago</div>
+                    </div>
+                    <div class="request-details">
+                        <div class="request-detail">
+                            <i class="fas fa-tint"></i>
+                            <span>Donated 1 unit of O+ blood</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Red Cross Blood Bank, Delhi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-title">Match Found</div>
+                        <div class="request-date">5 days ago</div>
+                    </div>
+                    <div class="request-details">
+                        <div class="request-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Matched with Priya S. for blood donation</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>5 km away from your location</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donors Page -->
+    <section id="donors" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Find Blood Donors in India</h2>
+                <p>Search for available blood donors in your area</p>
+            </div>
+
+            <div class="registration-form" style="margin-bottom: 40px;">
+                <h3>Search Filters</h3>
+                <form id="donor-search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="searchBloodType">Blood Type</label>
+                            <select id="searchBloodType" class="form-control">
+                                <option value="">Any Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="searchLocation">Location</label>
+                            <select id="searchLocation" class="form-control">
+                                <option value="">Any City</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Bangalore">Bangalore</option>
+                                <option value="Chennai">Chennai</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Ahmedabad">Ahmedabad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search Donors</button>
+                </form>
+            </div>
+
+            <div class="donors-list" id="donors-list">
+                <!-- Donors will be populated here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Requests Page -->
+    <section id="requests" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Blood Requests in India</h2>
+                <p>Current requests for blood donations in your area</p>
+            </div>
+
+            <div class="requests-list" id="requests-list">
+                <!-- Requests will be populated here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blood Banks Page -->
+    <section id="banks" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Blood Banks in India</h2>
+                <p>Find blood banks and donation centers near you</p>
+            </div>
+
+            <div class="banks-list" id="banks-list">
+                <!-- Blood banks will be populated here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Page -->
+    <section id="donate" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Donate Blood</h2>
+                <p>Your donation can save up to 3 lives. Join our donor community today.</p>
+            </div>
+
+            <div class="registration-form">
+                <form id="donation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donorFirstName">First Name</label>
+                            <input type="text" id="donorFirstName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donorLastName">Last Name</label>
+                            <input type="text" id="donorLastName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="donorEmail">Email Address</label>
+                        <input type="email" id="donorEmail" class="form-control" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donorBloodType">Blood Type</label>
+                            <select id="donorBloodType" class="form-control" required>
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="donorLocation">Location</label>
+                            <select id="donorLocation" class="form-control" required>
+                                <option value="">Select City</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Bangalore">Bangalore</option>
+                                <option value="Chennai">Chennai</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Ahmedabad">Ahmedabad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="donorPhone">Phone Number</label>
+                        <input type="tel" id="donorPhone" class="form-control" placeholder="e.g., 9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donationDate">Preferred Donation Date</label>
+                        <input type="date" id="donationDate" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Submit Donation Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>रक्तसेतु Raktsetu</h3>
+                    <p>Connecting blood donors with recipients across India to save lives.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-page="donors">Find Donors</a></li>
+                        <li><a href="#" data-page="requests">Requests</a></li>
+                        <li><a href="#" data-page="banks">Blood Banks</a></li>
+                        <li><a href="#" data-page="donate">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blood Donation Guide</a></li>
+                        <li><a href="#">Eligibility Criteria</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Health Street, New Delhi</li>
+                        <li><i class="fas fa-envelope"></i> contact@raktsetu.org</li>
+                        <li><i class="fas fa-phone"></i> +91 1800 123 4567</li>
+                        <li><i class="fas fa-globe"></i> www.raktsetu.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Raktsetu. All rights reserved. | An initiative for India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+                }
+            });
+            
+            // Initialize 3D blood drop
+            init3DBloodDrop();
+            
+            // Animate compatibility bar
+            setTimeout(() => {
+                document.querySelector('.compat-fill').style.width = '85%';
+            }, 500);
+            
+            // Form submission
+            document.getElementById('donor-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showNotification('Thank you for registering as a donor! Our team will contact you soon.', 'success');
+                this.reset();
+                
+                // Simulate adding to backend
+                const donor = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    bloodType: document.getElementById('bloodType').value,
+                    location: document.getElementById('location').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                };
+                
+                addToLocalStorage('donors', donor);
+            });
+            
+            // Donation form submission
+            document.getElementById('donation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showNotification('Thank you for your donation request! We will contact you to confirm your appointment.', 'success');
+                this.reset();
+            });
+            
+            // Donor search form
+            document.getElementById('donor-search-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const bloodType = document.getElementById('searchBloodType').value;
+                const location = document.getElementById('searchLocation').value;
+                
+                searchDonors(bloodType, location);
+            });
+            
+            // Initialize sample data with Indian context
+            initializeSampleData();
+            
+            // Load donors, requests and blood banks
+            loadDonors();
+            loadRequests();
+            loadBloodBanks();
+            
+            // Setup navigation
+            setupNavigation();
+        });
+        
+        // Simple 3D blood drop animation
+        function init3DBloodDrop() {
+            const container = document.getElementById('blood-drop-3d');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Create a simple CSS 3D effect instead of using Three.js
+            container.innerHTML = `
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 100px; height: 120px; background: #8B0000; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; 
+                         transform: perspective(500px) rotateX(20deg); box-shadow: 0 10px 30px rgba(139, 0, 0, 0.5); 
+                         animation: pulse 2s infinite;"></div>
+                </div>
+            `;
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            // Change icon based on type
+            const icon = notification.querySelector('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize sample data with Indian context
+        function initializeSampleData() {
+            // Check if sample data already exists
+            if (!localStorage.getItem('donorsInitialized')) {
+                const sampleDonors = [
+                    { firstName: 'Raj', lastName: 'Sharma', bloodType: 'O+', location: 'Delhi', email: 'raj.sharma@example.com', phone: '9876543210' },
+                    { firstName: 'Priya', lastName: 'Patel', bloodType: 'A-', location: 'Mumbai', email: 'priya.patel@example.com', phone: '9876543211' },
+                    { firstName: 'Amit', lastName: 'Kumar', bloodType: 'B+', location: 'Bangalore', email: 'amit.kumar@example.com', phone: '9876543212' },
+                    { firstName: 'Sunita', lastName: 'Singh', bloodType: 'AB+', location: 'Chennai', email: 'sunita.singh@example.com', phone: '9876543213' },
+                    { firstName: 'Vikram', lastName: 'Malhotra', bloodType: 'O-', location: 'Kolkata', email: 'vikram.m@example.com', phone: '9876543214' },
+                    { firstName: 'Anjali', lastName: 'Desai', bloodType: 'A+', location: 'Hyderabad', email: 'anjali.desai@example.com', phone: '9876543215' },
+                    { firstName: 'Rahul', lastName: 'Verma', bloodType: 'B-', location: 'Pune', email: 'rahul.verma@example.com', phone: '9876543216' },
+                    { firstName: 'Neha', lastName: 'Gupta', bloodType: 'AB-', location: 'Ahmedabad', email: 'neha.gupta@example.com', phone: '9876543217' }
+                ];
+                
+                const sampleRequests = [
+                    { patient: 'Rahul Verma', bloodType: 'AB+', location: 'Delhi', urgency: 'urgent', date: '2023-08-20', hospital: 'AIIMS Delhi', contact: '9876512345' },
+                    { patient: 'Meena Iyer', bloodType: 'O-', location: 'Mumbai', urgency: 'normal', date: '2023-08-22', hospital: 'Lilavati Hospital', contact: '9876512346' },
+                    { patient: 'Karthik Reddy', bloodType: 'B+', location: 'Bangalore', urgency: 'urgent', date: '2023-08-18', hospital: 'Apollo Hospital', contact: '9876512347' },
+                    { patient: 'Deepa Menon', bloodType: 'A-', location: 'Chennai', urgency: 'normal', date: '2023-08-25', hospital: 'Fortis Malar', contact: '9876512348' },
+                    { patient: 'Arjun Kapoor', bloodType: 'O+', location: 'Kolkata', urgency: 'urgent', date: '2023-08-19', hospital: 'AMRI Hospital', contact: '9876512349' },
+                    { patient: 'Sanjana Joshi', bloodType: 'A+', location: 'Hyderabad', urgency: 'normal', date: '2023-08-26', hospital: 'Yashoda Hospitals', contact: '9876512350' }
+                ];
+                
+                const sampleBanks = [
+                    { name: 'Indian Red Cross Society', location: 'Delhi', contact: '011-23716441', hours: '24/7', address: '1, Red Cross Road, New Delhi' },
+                    { name: 'Lions Blood Bank', location: 'Mumbai', contact: '022-26425555', hours: '9AM-9PM', address: 'Lion\'s Eye Hospital, Mumbai' },
+                    { name: 'Rotary Blood Bank', location: 'Bangalore', contact: '080-25321999', hours: '24/7', address: '5th Block, Jayanagar, Bangalore' },
+                    { name: 'Jeevan Blood Bank', location: 'Chennai', contact: '044-28297216', hours: '8AM-8PM', address: '34, Nunganbakkam High Road, Chennai' },
+                    { name: 'Central Blood Bank', location: 'Kolkata', contact: '033-22486473', hours: '24/7', address: 'Maniktala Main Road, Kolkata' },
+                    { name: 'NTR Blood Bank', location: 'Hyderabad', contact: '040-23456789', hours: '9AM-9PM', address: 'Banjara Hills, Hyderabad' },
+                    { name: 'Sahyadri Blood Bank', location: 'Pune', contact: '020-26058222', hours: '8AM-8PM', address: 'Kothrud, Pune' },
+                    { name: 'Civil Hospital Blood Bank', location: 'Ahmedabad', contact: '079-22680070', hours: '24/7', address: 'Asarwa, Ahmedabad' }
+                ];
+                
+                localStorage.setItem('donors', JSON.stringify(sampleDonors));
+                localStorage.setItem('requests', JSON.stringify(sampleRequests));
+                localStorage.setItem('bloodBanks', JSON.stringify(sampleBanks));
+                localStorage.setItem('donorsInitialized', 'true');
+            }
+        }
+        
+        // Add data to localStorage
+        function addToLocalStorage(key, data) {
+            const existingData = JSON.parse(localStorage.getItem(key) || '[]');
+            existingData.push(data);
+            localStorage.setItem(key, JSON.stringify(existingData));
+        }
+        
+        // Load donors from localStorage
+        function loadDonors() {
+            const donors = JSON.parse(localStorage.getItem('donors') || '[]');
+            const donorsList = document.getElementById('donors-list');
+            
+            donorsList.innerHTML = '';
+            
+            if (donors.length === 0) {
+                donorsList.innerHTML = '<p>No donors found. Be the first to register!</p>';
+                return;
+            }
+            
+            donors.forEach(donor => {
+                const donorCard = document.createElement('div');
+                donorCard.className = 'donor-card';
+                donorCard.innerHTML = `
+                    <div class="donor-header">
+                        <div class="donor-avatar">${donor.firstName.charAt(0)}${donor.lastName.charAt(0)}</div>
+                        <div class="donor-info">
+                            <h3>${donor.firstName} ${donor.lastName}</h3>
+                            <p>Available Donor</p>
+                        </div>
+                    </div>
+                    <div class="donor-details">
+                        <div class="donor-detail">
+                            <i class="fas fa-tint"></i>
+                            <span>${donor.bloodType}</span>
+                        </div>
+                        <div class="donor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${donor.location}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" style="width: 100%;">Contact Donor</button>
+                    </div>
+                `;
+                
+                donorsList.appendChild(donorCard);
+            });
+        }
+        
+        // Load requests from localStorage
+        function loadRequests() {
+            const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+            const requestsList = document.getElementById('requests-list');
+            
+            requestsList.innerHTML = '';
+            
+            if (requests.length === 0) {
+                requestsList.innerHTML = '<p>No active requests. Check back later!</p>';
+                return;
+            }
+            
+            requests.forEach(request => {
+                const requestCard = document.createElement('div');
+                requestCard.className = `request-card ${request.urgency === 'urgent' ? 'urgent' : ''}`;
+                requestCard.innerHTML = `
+                    <div class="request-header">
+                        <div class="request-title">${request.patient}</div>
+                        ${request.urgency === 'urgent' ? '<div class="request-urgency">Urgent</div>' : ''}
+                    </div>
+                    <div class="request-details">
+                        <div class="request-detail">
+                            <i class="fas fa-tint"></i>
+                            <span>Blood Type: ${request.bloodType}</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Location: ${request.location}</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-hospital"></i>
+                            <span>Hospital: ${request.hospital}</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>Needed by: ${new Date(request.date).toLocaleDateString()}</span>
+                        </div>
+                        <div class="request-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>Contact: ${request.contact}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" style="width: 100%;">I Can Help</button>
+                    </div>
+                `;
+                
+                requestsList.appendChild(requestCard);
+            });
+        }
+        
+        // Load blood banks from localStorage
+        function loadBloodBanks() {
+            const banks = JSON.parse(localStorage.getItem('bloodBanks') || '[]');
+            const banksList = document.getElementById('banks-list');
+            
+            banksList.innerHTML = '';
+            
+            if (banks.length === 0) {
+                banksList.innerHTML = '<p>No blood banks found.</p>';
+                return;
+            }
+            
+            banks.forEach(bank => {
+                const bankCard = document.createElement('div');
+                bankCard.className = 'bank-card';
+                bankCard.innerHTML = `
+                    <div class="bank-header">
+                        <div class="bank-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="bank-info">
+                            <h3>${bank.name}</h3>
+                            <p>${bank.location}</p>
+                        </div>
+                    </div>
+                    <div class="bank-details">
+                        <div class="bank-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>${bank.contact}</span>
+                        </div>
+                        <div class="bank-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>${bank.hours}</span>
+                        </div>
+                        <div class="bank-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${bank.address}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" style="width: 100%;">Contact Blood Bank</button>
+                    </div>
+                `;
+                
+                banksList.appendChild(bankCard);
+            });
+        }
+        
+        // Search donors based on filters
+        function searchDonors(bloodType, location) {
+            const donors = JSON.parse(localStorage.getItem('donors') || '[]');
+            const donorsList = document.getElementById('donors-list');
+            
+            donorsList.innerHTML = '';
+            
+            let filteredDonors = donors;
+            
+            if (bloodType) {
+                filteredDonors = filteredDonors.filter(donor => donor.bloodType === bloodType);
+            }
+            
+            if (location) {
+                filteredDonors = filteredDonors.filter(donor => 
+                    donor.location.toLowerCase().includes(location.toLowerCase()));
+            }
+            
+            if (filteredDonors.length === 0) {
+                donorsList.innerHTML = '<p>No donors match your search criteria.</p>';
+                return;
+            }
+            
+            filteredDonors.forEach(donor => {
+                const donorCard = document.createElement('div');
+                donorCard.className = 'donor-card';
+                donorCard.innerHTML = `
+                    <div class="donor-header">
+                        <div class="donor-avatar">${donor.firstName.charAt(0)}${donor.lastName.charAt(0)}</div>
+                        <div class="donor-info">
+                            <h3>${donor.firstName} ${donor.lastName}</h3>
+                            <p>Available Donor</p>
+                        </div>
+                    </div>
+                    <div class="donor-details">
+                        <div class="donor-detail">
+                            <i class="fas fa-tint"></i>
+                            <span>${donor.bloodType}</span>
+                        </div>
+                        <div class="donor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${donor.location}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-primary" style="width: 100%;">Contact Donor</button>
+                    </div>
+                `;
+                
+                donorsList.appendChild(donorCard);
+            });
+        }
+        
+        // Setup page navigation
+        function setupNavigation() {
+            // Handle nav link clicks
+            document.querySelectorAll('.nav-link, .footer-links a[data-page]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    navigateTo(pageId);
+                });
+            });
+            
+            // Handle button clicks with data-page attribute
+            document.querySelectorAll('a[data-page], button[data-page]').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    navigateTo(pageId);
+                });
+            });
+            
+            // Handle login/signup buttons
+            document.getElementById('login-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'login.html'; // Redirect to login page
+            });
+            
+            document.getElementById('signup-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'signup.html'; // Redirect to signup page
+            });
+        }
+        
+        // Navigate to specific page
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // If navigating to donors page, reload donors
+            if (pageId === 'donors') {
+                loadDonors();
+            }
+            
+            // If navigating to requests page, reload requests
+            if (pageId === 'requests') {
+                loadRequests();
+            }
+            
+            // If navigating to banks page, reload blood banks
+            if (pageId === 'banks') {
+                loadBloodBanks();
+            }
+        }
+    </script>
+</body>
+</html>
