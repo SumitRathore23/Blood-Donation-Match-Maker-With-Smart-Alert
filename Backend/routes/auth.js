@@ -51,7 +51,6 @@ router.post('/register', async (req, res) => {
       firstName,
       lastName,
       email,
-      password,
       phone,
       bloodType,
       location,
@@ -74,7 +73,6 @@ router.post('/register', async (req, res) => {
       firstName,
       lastName,
       email,
-      password,
       phone,
       bloodType,
       location,
@@ -123,5 +121,24 @@ router.post('/login', async (req, res) => {
     });
   }
 });
+
+router.get('/users', async (req, res) => {
+  try {
+    // Fetch only users who are donors
+    const users = await User.find({ isDonor: true }).select("-__v -password");
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
 
 module.exports = router;

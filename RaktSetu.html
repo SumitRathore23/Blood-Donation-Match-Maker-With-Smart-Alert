@@ -1496,53 +1496,46 @@
             }, 500);
             
             // Form submission
-            document.getElementById('donation-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+           document.getElementById('donation-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
 
-    const donor = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value, 
-        phone: document.getElementById('phone').value,
-        bloodType: document.getElementById('bloodType').value,
-        location: {
-            city: document.getElementById('city').value,
-            state: document.getElementById('state').value
-        },
-        dateOfBirth: document.getElementById('dob').value,
-        gender: document.getElementById('gender').value,
-        isDonor: true
-    };
+  const donor = {
+    firstName: document.getElementById('donorFirstName').value,
+    lastName: document.getElementById('donorLastName').value,
+    email: document.getElementById('donorEmail').value,
+    phone: document.getElementById('donorPhone').value,
+    bloodType: document.getElementById('donorBloodType').value,
+    location: {
+      city: document.getElementById('donorCity').value,
+      state: document.getElementById('donorState').value
+    },
+    dateOfBirth: document.getElementById('donorDOB').value,
+    gender: document.getElementById('donorGender').value,
+    preferredDonationDate: document.getElementById('donationDate').value,
+    isDonor: true
+  };
 
-    try {
-        const response = await fetch("http://localhost:5000/api/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(donor)
-        });
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(donor)
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.message || "Failed to register donor");
-        }
-
-        showNotification('Thank you for registering as a donor! 🎉', 'success');
-        this.reset();
-
-    } catch (error) {
-        console.error(error);
-        showNotification(error.message, 'error');
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to register donor");
     }
+
+    showNotification('Thank you for registering as a donor! 🎉', 'success');
+    this.reset();
+
+  } catch (error) {
+    console.error(error);
+    showNotification(error.message, 'error');
+  }
 });
-            
-            // Donation form submission
-            document.getElementById('donation-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                showNotification('Thank you for your donation request! We will contact you to confirm your appointment.', 'success');
-                this.reset();
-            });
             
             // Donor search form
             document.getElementById('donor-search-form').addEventListener('submit', function(e) {
@@ -1716,7 +1709,7 @@
                 
                 donorsList.appendChild(donorCard);
             });
-        }
+        }        
         
         // Load requests from localStorage
         function loadRequests() {
