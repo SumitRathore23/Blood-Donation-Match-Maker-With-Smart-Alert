@@ -1497,7 +1497,7 @@
             
             // Form submission
            document.getElementById('donation-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
+           e.preventDefault();
 
   const donor = {
     firstName: document.getElementById('donorFirstName').value,
@@ -1709,7 +1709,7 @@
                 
                 donorsList.appendChild(donorCard);
             });
-        }        
+        }
         
         // Load requests from localStorage
         function loadRequests() {
