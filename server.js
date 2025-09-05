@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const express = require("express");
 
 
 // Load env vars
@@ -17,11 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/requests', require('./routes/requests'));
-app.use('/api/blood-banks', require('./routes/bloodBanks'));
-app.use('/api/donations', require('./routes/donations'));
+app.use('/api/auth', require('./Backend/routes/auth'));
+app.use('/api/users', require('./Backend/routes/user'));
+app.use('/api/requests', require('./Backend/routes/request'));
+app.use('/api/blood-banks', require('./Backend/routes/bloodBank'));
+// app.use('/api/donations', require('./Backend/routes/donations'));
 
 
 // Health check endpoint
@@ -53,7 +52,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONOGODB_URI_MY, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

@@ -333,7 +333,7 @@
             </div>
             
             <div class="signup-link">
-                Don't have an account? <a href="#" id="signup-link">Sign up now</a>
+                Don't have an account? <a href="signup.html" id="signup-link">Sign up now</a>
             </div>
         </div>
     </div>
@@ -353,42 +353,64 @@
                 this.querySelector('i').classList.toggle('fa-eye-slash');
             });
             
-            // Form submission
-            document.getElementById('login-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const remember = document.getElementById('remember').checked;
-                
-                // Simple validation
-                if (!email || !password) {
-                    showNotification('Please fill in all fields', 'error');
-                    return;
-                }
-                
-                // Email validation
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showNotification('Please enter a valid email address', 'error');
-                    return;
-                }
-                
-                // Simulate login process
-                simulateLogin(email, password, remember);
-            });
-            
-            // Sign up link
-            document.getElementById('signup-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                // In a real application, this would redirect to the signup page
-                showNotification('Redirecting to sign up page...', 'success');
-                
-                // After a brief delay, redirect to the main page (simulating signup)
-                setTimeout(() => {
-                    window.location.href = 'index.html'; // Your main page
-                }, 1500);
-            });
+          document.getElementById('login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+
+    // Simple validation
+    if (!email || !password) {
+        showNotification('Please fill in all fields', 'error');
+        return;
+    }
+
+    try {
+        const loginBtn = document.querySelector('#login-form button[type="submit"]');
+        const originalText = loginBtn.textContent;
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+        loginBtn.disabled = true;
+
+        // ✅ Call backend API
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            showNotification('Login successful! Redirecting...', 'success');
+
+            // Save token or session
+            if (remember) {
+                localStorage.setItem("token", data.token); // if backend returns JWT
+                localStorage.setItem("userEmail", email);
+                localStorage.setItem("rememberMe", "true");
+            } else {
+                sessionStorage.setItem("token", data.token);
+                sessionStorage.setItem("userEmail", email);
+            }
+
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = "Raktsetu.html"; // Change to your dashboard page
+            }, 1500);
+
+        } else {
+            showNotification(data.message || "Invalid credentials", "error");
+            loginBtn.textContent = originalText;
+            loginBtn.disabled = false;
+        }
+
+    } catch (err) {
+        showNotification("Server error. Please try again.", "error");
+        console.error(err);
+    }
+});
+        
             
             // Forgot password
             document.querySelector('.forgot-password').addEventListener('click', function(e) {
@@ -448,7 +470,7 @@
                         
                         // Redirect to dashboard after successful login
                         setTimeout(() => {
-                            window.location.href = 'index.html'; // Your main page
+                            window.location.href = 'RaktSetu.html'; // Your main page
                         }, 1500);
                     } else {
                         showNotification('Invalid email or password', 'error');

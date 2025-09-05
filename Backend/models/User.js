@@ -101,4 +101,5 @@ userSchema.methods.correctPassword = async function(candidatePassword, userPassw
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-module.exports = mongoose.model('User', userSchema);
+// Fix: prevent OverwriteModelError
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);

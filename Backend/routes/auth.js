@@ -1,31 +1,48 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const userProfile = require('../models/userProfile');
 
 const router = express.Router();
 
 // Create JWT token
-const signToken = id => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET || "mysecret", {
+    expiresIn: process.env.JWT_EXPIRES_IN || "1d", // fallback
   });
 };
 
-// Create and send token
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  
-  // Remove password from output
-  user.password = undefined;
-  
-  res.status(statusCode).json({
-    success: true,
-    token,
-    data: {
-      user
-    }
-  });
+  user.password = undefined; // hide password
+  res.status(statusCode).json({ success: true, token, data: { user } });
 };
+
+// ✅ Signup route
+router.post("/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body; // use "name"
+
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Name, email & password required" });
+    }
+
+    const existing = await userProfile.findOne({ email });
+    if (existing) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
+
+    const user = await userProfile.create({ name, email, password });
+    createSendToken(user, 201, res);
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 
 // Register user
 router.post('/register', async (req, res) => {
@@ -89,7 +106,7 @@ router.post('/login', async (req, res) => {
     }
     
     // Check if user exists and password is correct
-    const user = await User.findOne({ email }).select('+password');
+    const user = await userProfile.findOne({ email }).select('+password');
     
     if (!user || !(await user.correctPassword(password, user.password))) {
       return res.status(401).json({

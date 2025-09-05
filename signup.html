@@ -289,9 +289,14 @@
     <div class="login-container">
         <div class="login-card">
             <div class="logo">रक्तसेतु <span>Raktsetu</span></div>
-            <h2>Login to Your Account</h2>
+            <h2>Create Your Account</h2>
             
-            <form id="login-form">
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
@@ -304,20 +309,20 @@
                         <i class="far fa-eye"></i>
                     </span>
                 </div>
-                
-                <div class="login-options">
-                    <div class="remember-me">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+
+                <div class="form-group password-toggle">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+                    <span class="toggle-password" id="toggleConfirmPassword">
+                        <i class="far fa-eye"></i>
+                    </span>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
             
             <div class="divider">
-                <span>Or continue with</span>
+                <span>Or sign up with</span>
             </div>
             
             <div class="social-login">
@@ -333,137 +338,120 @@
             </div>
             
             <div class="signup-link">
-                Don't have an account? <a href="#" id="signup-link">Sign up now</a>
+                Already have an account? <a href="./login.html">Login here</a>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle password visibility
-            const togglePassword = document.getElementById('togglePassword');
-            const password = document.getElementById('password');
-            
-            togglePassword.addEventListener('click', function() {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                
-                // Toggle eye icon
-                this.querySelector('i').classList.toggle('fa-eye');
-                this.querySelector('i').classList.toggle('fa-eye-slash');
-            });
-            
-            // Form submission
-            document.getElementById('login-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const remember = document.getElementById('remember').checked;
-                
-                // Simple validation
-                if (!email || !password) {
-                    showNotification('Please fill in all fields', 'error');
-                    return;
-                }
-                
-                // Email validation
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showNotification('Please enter a valid email address', 'error');
-                    return;
-                }
-                
-                // Simulate login process
-                simulateLogin(email, password, remember);
-            });
-            
-            // Sign up link
-            document.getElementById('signup-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                // In a real application, this would redirect to the signup page
-                showNotification('Redirecting to sign up page...', 'success');
-                
-                // After a brief delay, redirect to the main page (simulating signup)
-                setTimeout(() => {
-                    window.location.href = 'index.html'; // Your main page
-                }, 1500);
-            });
-            
-            // Forgot password
-            document.querySelector('.forgot-password').addEventListener('click', function(e) {
-                e.preventDefault();
-                showNotification('Password reset functionality would be implemented here', 'success');
-            });
-            
-            // Social login buttons
-            document.querySelectorAll('.social-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const platform = this.querySelector('i').parentNode.className.includes('google') ? 'Google' : 
-                                  this.querySelector('i').parentNode.className.includes('facebook') ? 'Facebook' : 'Twitter';
-                    showNotification(`${platform} login would be implemented here`, 'success');
-                });
-            });
-            
-            // Show notification
-            function showNotification(message, type) {
-                const notification = document.getElementById('notification');
-                const notificationText = document.getElementById('notification-text');
-                
-                notificationText.textContent = message;
-                notification.className = `notification ${type} show`;
-                
-                // Change icon based on type
-                const icon = notification.querySelector('i');
-                icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-                
-                // Hide after 3 seconds
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-            
-            // Simulate login process
-            function simulateLogin(email, password, remember) {
-                // Show loading state
-                const loginBtn = document.querySelector('#login-form button[type="submit"]');
-                const originalText = loginBtn.textContent;
-                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-                loginBtn.disabled = true;
-                
-                // Simulate API call
-                setTimeout(() => {
-                    // For demo purposes, accept any non-empty password
-                    if (password.length > 0) {
-                        showNotification('Login successful! Redirecting...', 'success');
-                        
-                        // Store user session (in a real app, this would be a proper auth token)
-                        if (remember) {
-                            localStorage.setItem('userEmail', email);
-                            localStorage.setItem('rememberMe', 'true');
-                        } else {
-                            sessionStorage.setItem('userEmail', email);
-                        }
-                        
-                        // Redirect to dashboard after successful login
-                        setTimeout(() => {
-                            window.location.href = 'index.html'; // Your main page
-                        }, 1500);
-                    } else {
-                        showNotification('Invalid email or password', 'error');
-                        loginBtn.textContent = originalText;
-                        loginBtn.disabled = false;
-                    }
-                }, 1500);
-            }
-            
-            // Check if remember me was previously set
-            if (localStorage.getItem('rememberMe') === 'true' && localStorage.getItem('userEmail')) {
-                document.getElementById('email').value = localStorage.getItem('userEmail');
-                document.getElementById('remember').checked = true;
-            }
+     document.addEventListener("DOMContentLoaded", function () {
+      const togglePassword = document.getElementById("togglePassword");
+      const confirmTogglePassword = document.getElementById(
+        "toggleConfirmPassword"
+      );
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirm-password");
+
+      // Toggle password visibility
+      togglePassword.addEventListener("click", function () {
+        const type =
+          password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        this.querySelector("i").classList.toggle("fa-eye");
+        this.querySelector("i").classList.toggle("fa-eye-slash");
+      });
+
+      confirmTogglePassword.addEventListener("click", function () {
+        const type =
+          confirmPassword.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        confirmPassword.setAttribute("type", type);
+        this.querySelector("i").classList.toggle("fa-eye");
+        this.querySelector("i").classList.toggle("fa-eye-slash");
+      });
+
+      // Form submission
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const pass = document.getElementById("password").value.trim();
+          const confirmPass = document
+            .getElementById("confirm-password")
+            .value.trim();
+
+          if (!name || !email || !pass || !confirmPass) {
+            showNotification("Please fill in all fields", "error");
+            return;
+          }
+
+          if (pass !== confirmPass) {
+            showNotification("Passwords do not match", "error");
+            return;
+          }
+
+          await signupUser(name, email, pass);
         });
+
+      // Backend signup function
+      async function signupUser(name, email, pass) {
+        const signupBtn = document.querySelector(
+          "#signup-form button[type='submit']"
+        );
+        const originalText = signupBtn.textContent;
+        signupBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Signing up...';
+        signupBtn.disabled = true;
+
+        try {
+          const response = await fetch(
+            "http://localhost:5000/api/auth/signup",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email, password: pass }),
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Signup failed");
+          }
+
+          showNotification("Signup successful! Redirecting...", "success");
+
+          setTimeout(() => {
+            window.location.href = "RaktSetu.html"; // redirect to raktsetu
+          }, 1500);
+        } catch (error) {
+          console.error(error);
+          showNotification(error.message, "error");
+          signupBtn.textContent = originalText;
+          signupBtn.disabled = false;
+        }
+      }
+
+      // Notification system
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        const notificationText = document.getElementById("notification-text");
+        notificationText.textContent = message;
+        notification.className = `notification ${type} show`;
+
+        const icon = notification.querySelector("i");
+        icon.className =
+          type === "success" ? "fas fa-check-circle" : "fas fa-exclamation-circle";
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+    });
     </script>
 </body>
 </html>
